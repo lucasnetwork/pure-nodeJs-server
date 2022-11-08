@@ -3,7 +3,7 @@ const fs = require("fs")
 
 const routes = {
     GET:{
-        "/pessoas":(req,res)=>{
+        "pessoas":(req,res)=>{
             if(fs.existsSync("pessoas.txt")){
                 const file =fs.readFileSync("pessoas.txt")
                 console.log(file)
@@ -11,10 +11,17 @@ const routes = {
             res.writeHead(404);
 
             res.end("not exist file")
+        },
+        "pessoas":{
+            ":id":(req,res)=>{
+                console.log(req.params)
+                res.end("not exist file")
+
+            }
         }
     },
     POST:{
-        "/pessoas":(req,res)=>{
+        "pessoas":(req,res)=>{
             req.on("data",(chunk)=>{
                 const json = JSON.parse(chunk.toString())
                 let data = ''
@@ -28,12 +35,25 @@ const routes = {
         }
     },
     DELETE:{
-        "/pessoas":()=>{}
+        "pessoas":()=>{}
     }
 }
 
 http.createServer((req,res)=>{
-    const route = routes[req.method][req.url]
+    let route = routes[req.method]
+    req.url.split("/").forEach(url =>{
+        if(url == ""){
+            return
+        }
+        if(typeof route[url] === 'function'){
+            route = route[url]
+        }else if(route[url]){
+            route = route[url]
+        }else if(route[":id"]){
+            route = route[":id"]
+            req.params= {id:url}
+        }
+    })
     if(route){
         route(req,res)
     }
