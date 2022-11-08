@@ -1,0 +1,1 @@
+projeto feito com nodeJs Puro para cadastrar nome de pessoas em arquivos de texto e enviar esses arquivos como json 
