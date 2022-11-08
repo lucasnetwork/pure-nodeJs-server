@@ -1,14 +1,22 @@
 const http = require("http")
+const fs = require("fs")
 
 const routes = {
     GET:{
         "/pessoas":(req,res)=>{
-            res.write("hello world")
-            res.end()
+            if(fs.existsSync("pessoas.txt")){
+                const file =fs.readFileSync("pessoas.txt")
+                console.log(file)
+            }
+            res.writeHead(404);
+
+            res.end("not exist file")
         }
     },
     POST:{
-        "/pessoas":()=>{}
+        "/pessoas":(req,res)=>{
+          
+        }
     },
     DELETE:{
         "/pessoas":()=>{}
