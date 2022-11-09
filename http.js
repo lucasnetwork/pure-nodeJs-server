@@ -12,11 +12,10 @@ const routes = {
 
             res.end("not exist file")
         },
-        "pessoas":{
-            ":id":(req,res)=>{
-                console.log(req.params)
-                res.end("not exist file")
-
+        "download":(req,res)=>{
+            if(fs.existsSync("pessoas.txt")){
+                res.writeHead(200, {'Content-Type': 'application/force-download','Content-disposition':'attachment; filename=pessoas.txt'});
+                fs.createReadStream("pessoas.txt").pipe(res)
             }
         }
     },
@@ -35,7 +34,21 @@ const routes = {
         }
     },
     DELETE:{
-        "pessoas":()=>{}
+        "pessoas":{
+            ":id":(req,res)=>{
+                if(fs.existsSync("pessoas.txt")){
+                    const file = fs.readFileSync("pessoas.txt").toString()
+                    let data = ''
+                    file.split("\n").forEach((value,index)=>{
+                        if(index !== Number(req.params.id)){
+                            data += value+ "\n" 
+                        }
+                    })
+                    fs.writeFileSync("pessoas.txt",data)
+                    res.end("name deleted")
+                }
+            }
+        }
     }
 }
 
@@ -54,7 +67,7 @@ http.createServer((req,res)=>{
             req.params= {id:url}
         }
     })
-    if(route){
+    if(typeof route === 'function'){
         route(req,res)
     }
 }).listen(8000)
