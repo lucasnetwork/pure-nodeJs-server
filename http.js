@@ -7,7 +7,6 @@ const routes = {
       pessoas: (req, res) => {
         if (fs.existsSync("pessoas.txt")) {
           const file = fs.readFileSync("pessoas.txt");
-          console.log(file);
         }
         res.writeHead(404);
 
