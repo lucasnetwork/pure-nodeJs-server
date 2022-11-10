@@ -27,7 +27,6 @@ class Route{
 
             }
         });
-        console.log(headcurrentRoute)
         headcurrentRoute[headName] = functionMethod
         this.route[method] = currentRoute
     }
