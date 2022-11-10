@@ -3,7 +3,7 @@ const path = require("path");
 const fs = require("fs");
 
 const route = new Route();
-const pathFile = path.resolve(__dirname, "..","..", "pessoas.txt");
+const pathFile = path.resolve(__dirname, "..", "..", "pessoas.txt");
 const pathIndexFileHtml = path.resolve(
   __dirname,
   "..",
@@ -14,7 +14,18 @@ const pathIndexFileHtml = path.resolve(
 
 route.get("pessoas", (req, res) => {
   if (fs.existsSync(pathFile)) {
-    fs.createReadStream(pathFile).pipe(res);
+    const file = fs.readFileSync(pathFile).toString().split("\n");
+    let html = "<ul>";
+    file.forEach((pessoa) => {
+      html += "<li>" + pessoa + "</li>";
+    });
+    html += "</ul>";
+    res.writeHead(200, {
+      "content-Type": "text/HTML",
+    });
+    res.write(html);
+
+    res.end();
     return;
   }
   res.writeHead(404);
