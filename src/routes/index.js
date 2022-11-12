@@ -73,4 +73,15 @@ route.delete("pessoas/:id", (req, res) => {
   }
 });
 
+route.get("static/css/:id",(req,res)=>{
+  const pathCss = path.resolve(__dirname,'..','static','css',req.params.id)
+  if(fs.existsSync(pathCss)){
+    fs.createReadStream(pathCss).pipe(res)
+  }else{
+    res.writeHead(404)
+    res.end("Css not exist")
+  }
+})
+
+
 module.exports = route.route;

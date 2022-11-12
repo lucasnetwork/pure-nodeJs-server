@@ -20,7 +20,7 @@ class Route{
             if(element === ""){
                 return
             }
-            currentRoute[element] = {}
+            headcurrentRoute[element] = {}
             headName = element
             if(index+1 !== urls.length){
                 headcurrentRoute = headcurrentRoute[element] 
