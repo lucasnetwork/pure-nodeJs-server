@@ -1,0 +1,45 @@
+body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+     width:100vw;
+    height:100vh;
+}
+
+*{
+    margin:0;
+    padding:0;
+    border-box:box-sizing
+}
+
+form{
+    display:flex;
+    flex-direction:column;
+
+}
+
+form input{
+    height:40px;
+    border:none;
+    font-size:24px; 
+    padding:0;
+}
+
+h1{
+    margin-bottom:16px;
+    color:#181F1C;
+    font-family:sans-serif
+}
+
+button{
+    height:40px;
+    font-size:16px;
+    background:#FE5F00;
+    border:none;
+    color:#fff;
+    font-weight:bold;
+    border-radius:8px;
+    margin-top:8px;
+    cursor:pointer
+}
